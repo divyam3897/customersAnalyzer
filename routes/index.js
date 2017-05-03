@@ -16,22 +16,17 @@ router.get('/dashboard', function(req, res){
   var url = "mongodb://localhost:27017/hack";
 
   mongoClient.connect(url, function(err, db){
-    if(err){
+    if(err)
       console.log("DB connection error");
-    }
-    else{
+    else {
       //console.log("DB connection established");
       var collection = db.collection('audios');
       collection.find({}).toArray(function(err, result){
         if(err){
           console.log("error reading data");
         }
-        else if(result.length){
-          req.flash('info', 'Your Cart Items Here ... ');
+        else
           res.render("dashboard.ejs", {"audios": result, message: req.flash()});
-        }else{
-          res.send("this is lab page having no equipments");
-        }
       });
     }
 });
@@ -42,21 +37,16 @@ router.get('/showdetail/:aud', function(req, res){
   var url = "mongodb://localhost:27017/hack";
 
   mongoClient.connect(url, function(err, db){
-    if(err){
+    if(err)
       console.log("DB connection error");
-    }
     else{
       //console.log("DB connection established");
       var collection = db.collection('audios');
       collection.find({voiceName: req.params.aud}).toArray(function(err, result){
-        if(err){
+        if(err)
           console.log("error reading data");
-        }
-        else if(result.length){
+        else
           res.render("calldetails.ejs", {"audios": result[0], message: req.flash()});
-        }else{
-          res.send("this is lab page having no equipments");
-        }
       });
     }
 });
